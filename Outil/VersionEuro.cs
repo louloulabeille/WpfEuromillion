@@ -9,19 +9,22 @@ namespace EuroLib
     /// <summary>
     /// classe qui se connecte au serveur pour vérifier la version du logiciel
     /// </summary>
-    public class VersionEuro : IVersion<HttpClient>
+    public class VersionEuro : IVersionRecup
     {
         #region propriété
         /// <summary>
         /// Object de l'URL pour se connecter au serveur Http distant pour la vérification de la version du logiciel
         /// </summary>
         private readonly Uri? _url;
-        private readonly Version _version = new(1, 0, 1);  // version par défaut
         /// <summary>
         /// correspond si l'oject est bon
         /// </summary>
         public bool UrlOk = false;
-        //private static HttpClient _httpClient = new HttpClient();
+        public bool ConnexionOk = false;
+        public Version Version { get; }
+
+        private readonly HttpClient _httpClient = new();
+
         #endregion
 
         #region Constructeur
@@ -29,35 +32,41 @@ namespace EuroLib
         /// url est l'url de connexion vers le serveur pour faire la recherche de version
         /// </summary>
         /// <param name="url"></param>
-        public VersionEuro(string url) {
+        public VersionEuro(string url)
+        {
             UrlOk = Uri.TryCreate(url, UriKind.Absolute, out _url);
+            Version = ConnectionAsync() ?? new Version(1,0,0);
         }
         #endregion
 
         #region méthode
-        private void ConnectionAsync(HttpClient connexion)
+        private Version? ConnectionAsync()
         {
-            if (_url is null) return;
+            if (_url is null) return null;
             try
             {
-                string ver = connexion.GetStringAsync(_url).Result;
+                string ver = _httpClient.GetStringAsync(_url).Result;
                 if (!string.IsNullOrEmpty(ver))
                 {
-                    Version newVer = new (ver);
+                    return new Version(ver);
                 }
+                ConnexionOk = true;
+                return null;
             }
-            catch( Exception ex)
+            catch
             {
-                Console.WriteLine(ex);
-                connexion.Dispose();
+                ConnexionOk = false;
+                Dispose();
+                return null;
             }
         }
 
-        public string GetVersion(HttpClient connexion)
+        public string GetVersion()
         {
-            ConnectionAsync(connexion);
-            return _version.ToString();
+            return Version.ToString();
         }
+
+        public virtual void Dispose() => _httpClient.Dispose();
         #endregion
     }
 

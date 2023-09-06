@@ -85,9 +85,6 @@ Console.WriteLine(recherche.Equals(tirages.Where(x=>x.Id==11).First<Tirage>()));
 affiche = tirage.Entities.TirageExist(recherche2) ? ExisteTirage : ExistePasTirage;
 affiche(recherche.ToString());
 
-var ici = unit.Entities.Find(x => x.Ecroissant== "3-9" && x.Tcroissant== "48-45-42-13-12").FirstOrDefault();
-Console.WriteLine(ici.ToString());
-
 //DateTime date = tirages.Max(e => e.DateTirage).Date;
 //Console.WriteLine(date.ToString("D"));
 

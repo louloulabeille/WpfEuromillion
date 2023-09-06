@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Outil.Interface
 {
-    internal interface IVersion<T> where T : class
+    internal interface IVersionRecup : IDisposable
     {
-        string GetVersion(T connexion);
+        Version Version { get; }
+        string GetVersion();
     }
 }

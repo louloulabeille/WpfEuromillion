@@ -28,8 +28,7 @@ namespace MatDesingEuro
             InitializeComponent();
             // gestion de la version du logiciel
             VersionEuro ver = new (Parametre.Default.version);
-            HttpClient http = new ();
-            string version = ver.GetVersion(http);
+            string version = ver.GetVersion();
             Lab_Version.Content = $"Version {version}";
         }
 
