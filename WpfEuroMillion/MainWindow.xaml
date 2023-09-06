@@ -1,0 +1,39 @@
+﻿<Window x:Class="WpfEuroMillion.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfEuroMillion"
+        mc:Ignorable="d"
+        Title="Euromillion" Height="720" Width="1024" Icon="/Image/statistiques.png">
+    <Grid>
+
+        <!--#region Menu-->
+        <DockPanel Background="#FF696868" Margin="0">
+            <Menu DockPanel.Dock="Top" Background="#FF383737" Foreground="#FFC7C7C7">
+                <MenuItem Header="_Tirage" Background="#FF383737" >
+                    <MenuItem Header="_Ajouter" x:Name="Menu_Ajout" Foreground="#FFC7C7C7" Background="#FF383737">
+                        <MenuItem Header="_Dernier Tirage" Background="#FF383737" Foreground="#FFC7C7C7" />
+                        <MenuItem Header="_Ajout CSV" x:Name="Menu_Ajout_CSV" Background="#FF383737" Foreground="#FFC7C7C7" Click="Menu_Ajout_CSV_Click"/>
+                    </MenuItem>
+                    <MenuItem Header="_Fermer" x:Name="Menu_Fermer" Click="Menu_Fermer_Click" Background="#FF383737" Foreground="#FFC7C7C7"/>
+                </MenuItem>
+                <MenuItem Header="_Statistique">
+                    <MenuItem Header="_stat" x:Name="Menu_Stat" Background="#FF383737" Foreground="#FFC7C7C7"/>
+                </MenuItem>
+                <MenuItem Header="_Aide">
+                    <MenuItem Header="_A propos" x:Name="Menu_A_Propos" Background="#FF383737" Foreground="#FFC7C7C7"/>
+                </MenuItem>
+                <DockPanel LastChildFill="False" Background="#FF383737"/>
+            </Menu>
+            <Grid>
+                <Frame x:Name="Fra_Principal"></Frame>
+            </Grid>
+            <!--<StackPanel></StackPanel>-->
+
+            <!--<DockPanel LastChildFill="False" Width="100"/>-->
+        </DockPanel>
+        <!--#endregion-->
+        
+    </Grid>
+</Window>
