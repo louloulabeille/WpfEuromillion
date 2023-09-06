@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace DAL.UnitOfWork
 {
+    /// <summary>
+    /// prend en compte ITirageRepository
+    /// méthode d'accès à la table spécifique, requète non générique de IRepositories
+    /// </summary>
     public class UnitOfWorkTirage : UnitOfWork<Tirage>
     {
         public new ITirageRepository Entities;

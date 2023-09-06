@@ -4,6 +4,7 @@ using DAL;
 using DAL.Integration;
 using DAL.Repository;
 using DAL.UnitOfWork;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Globalization;
@@ -24,15 +25,14 @@ Console.WriteLine("Hello, World!");
 IntegrationTirage integration = new(listeF);
 integration.SetAll();
 */
-EuroDbContest contest = new ();
-UnitOfWork<Tirage> unit = new(contest);
-UnitOfWorkTirage tirage = new(contest);
+using EuroDbContest contest = new ();
+using UnitOfWork<Tirage> unit = new(contest); // générique
+using UnitOfWorkTirage tirage = new(contest); // avec les méthodes spécifiques
 
-/*UnitOfWork<TirageEqualityComparer> fdfd = new (contest);
+/*UnitOfWork<TirageEqualityComparer> fdfd = new (contest); // a gérer exception
 fdfd.Entities.GetAll();*/
 
-AfficheMessage affiche;
-
+AfficheMessage affiche; // déclaration du délégate
 
 Tirage tir = new()
 {
@@ -84,6 +84,9 @@ Console.WriteLine(recherche.Equals(tirages.Where(x=>x.Id==11).First<Tirage>()));
 
 affiche = tirage.Entities.TirageExist(recherche2) ? ExisteTirage : ExistePasTirage;
 affiche(recherche.ToString());
+
+var ici = unit.Entities.Find(x => x.Ecroissant== "3-9" && x.Tcroissant== "48-45-42-13-12").FirstOrDefault();
+Console.WriteLine(ici.ToString());
 
 //DateTime date = tirages.Max(e => e.DateTirage).Date;
 //Console.WriteLine(date.ToString("D"));

@@ -10,11 +10,16 @@ using System.Threading.Tasks;
 
 namespace DAL.UnitOfWork
 {
+    /// <summary>
+    /// implémentation du desing pattern UnitOfWork
+    /// implémentation générique
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class UnitOfWork<T> : IUnitOfWork where T : class
     {
         private readonly EuroDbContest _contest;
 
-        public Repository<T> Entities { get; }
+        public IRepository<T> Entities { get; }
 
         public UnitOfWork (EuroDbContest context)
         {
@@ -22,12 +27,12 @@ namespace DAL.UnitOfWork
             Entities = new Repository<T> (context);
         }
 
-        public virtual void Dispose()
+        public void Dispose()
         {
             _contest.Dispose();
         }
 
-        public virtual int Save()
+        public int Save()
         {
             return _contest.SaveChanges();
         }

@@ -44,9 +44,7 @@ namespace DAL.Repository
                 tirage.Ecroissant = string.Join("-", etoiles);
                 
             }
-            /*var t = _dbContext.Tirages.ToList<Tirage>();
-            t.ToDic_dbContext.Tirages.ToDictionary<int, Tirage>(p => p.Id)*/
-            return _dbContext.Tirages.Contains<Tirage>(tirage);
+            return _dbContext.Tirages.ToList<Tirage>().Contains<Tirage>(tirage,new TirageEqualityComparer());
         }
 
     }
