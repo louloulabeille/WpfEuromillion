@@ -1,4 +1,5 @@
 using EuroLib;
+using Outil;
 
 namespace TestEuro
 {

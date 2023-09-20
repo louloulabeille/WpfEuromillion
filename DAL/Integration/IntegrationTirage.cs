@@ -15,9 +15,12 @@ namespace DAL.Integration
 
         private List<Tirage> ListeTirage { get; set; } = new();
 
-        public IntegrationTirage(string[] liste)
+        private readonly EuroDbContest contest;
+
+        public IntegrationTirage(string[] liste, EuroDbContest contest)
         {
             ListeFichier = liste;
+            this.contest = contest;
         }
 
         public void SetAll()
@@ -36,7 +39,6 @@ namespace DAL.Integration
                         ListeTirage.Add(GetTirage(ligne));
                     }
                 }
-                EuroDbContest contest = new();
                 contest.Tirages.AddRangeAsync(ListeTirage.ToArray());
                 //Console.WriteLine(ListeTirage.Where<Tirage>(t => t.Tcroissant.Contains("28-16-20-")).First().Tcroissant);           
 
@@ -52,7 +54,7 @@ namespace DAL.Integration
             }
         }
 
-        protected Tirage GetTirage(string[] ligneCsv)
+        protected static Tirage GetTirage(string[] ligneCsv)
         {
             string examDate = ligneCsv[2];
             int[] tabTriTirage = new int[] { int.Parse(ligneCsv[4]), int.Parse(ligneCsv[5]), int.Parse(ligneCsv[6]), int.Parse(ligneCsv[7]), int.Parse(ligneCsv[8]) };

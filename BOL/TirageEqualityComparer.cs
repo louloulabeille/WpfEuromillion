@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace BOL
 {
+    /// <summary>
+    /// class qui est pris en compte dans la méthode Contains de la classe TirageRepository
+    /// qui va se servir de ce système de comparaison pour comparer 2 objects tirages
+    /// </summary>
     public class TirageEqualityComparer : EqualityComparer<Tirage>
     {
         public override bool Equals(Tirage? x, Tirage? y)

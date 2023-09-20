@@ -3,6 +3,7 @@ using System;
 using System.Net.Http;
 using System.Security.Policy;
 using System.Threading.Tasks;
+using Outil;
 
 namespace EuroLib
 {
@@ -23,7 +24,7 @@ namespace EuroLib
         public bool ConnexionOk = false;
         public Version Version { get; }
 
-        private readonly HttpClient _httpClient = new();
+        private readonly HttpClientConnexion _httpClient = HttpClientConnexion.Instance;
 
         #endregion
 
@@ -66,7 +67,7 @@ namespace EuroLib
             return Version.ToString();
         }
 
-        public virtual void Dispose() => _httpClient.Dispose();
+        public virtual void Dispose() => GC.SuppressFinalize(this);
         #endregion
     }
 

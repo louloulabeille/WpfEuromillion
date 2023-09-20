@@ -27,10 +27,7 @@ namespace DAL.UnitOfWork
             Entities = new Repository<T> (context);
         }
 
-        public void Dispose()
-        {
-            _contest.Dispose();
-        }
+        public virtual void Dispose() => GC.SuppressFinalize(this);
 
         public int Save()
         {

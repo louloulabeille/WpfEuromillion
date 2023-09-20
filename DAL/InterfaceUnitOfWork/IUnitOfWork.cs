@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL.InterfaceUnitOfWork
 {
-    internal interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         int Save();
     }

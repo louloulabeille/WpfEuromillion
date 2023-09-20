@@ -6,20 +6,26 @@ namespace DAL;
 
 public partial class EuroDbContest : DbContext
 {
-    public EuroDbContest()
+    private readonly string _stringConnection;
+
+    public EuroDbContest( string connexion)
     {
+        _stringConnection = connexion;
     }
 
-    public EuroDbContest(DbContextOptions<EuroDbContest> options)
+    public EuroDbContest(DbContextOptions<EuroDbContest> options, string connexion)
         : base(options)
     {
+        _stringConnection = connexion;
     }
 
     public virtual DbSet<Tirage> Tirages { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=Euro;User Id=sa;Password=ieupn486jadF&;TrustServerCertificate=True;");
+    {
+
+        optionsBuilder.UseSqlServer(_stringConnection);
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

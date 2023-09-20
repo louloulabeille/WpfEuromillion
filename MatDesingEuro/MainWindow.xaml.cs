@@ -1,4 +1,8 @@
-﻿using EuroLib;
+﻿using DAL;
+using EuroLib;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Outil;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +18,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DAL.InterfaceUnitOfWork;
+using DAL.UnitOfWork;
 
 namespace MatDesingEuro
 {
@@ -22,14 +28,19 @@ namespace MatDesingEuro
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly EuroDbContest DbContest = new EuroDbContest(_configuration["Connexion:ConnexionString"]?? default!);
+        private static readonly IConfiguration _configuration = new ConfigurationBuilder().AddUserSecrets<MainWindow>().Build();
+        private readonly IUnitOfWork _unitOfWork;
 
         public MainWindow()
         {
             InitializeComponent();
+
             // gestion de la version du logiciel
             VersionEuro ver = new (Parametre.Default.version);
             string version = ver.GetVersion();
             Lab_Version.Content = $"Version {version}";
+            _unitOfWork = new UnitOfWorkTirage(DbContest);
         }
 
         /// <summary>
